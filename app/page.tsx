@@ -43,19 +43,25 @@ export default async function Component() {
             className="font-medium text-gray-900  dark:text-gray-50"
             href="#"
           >
+            <div className="tab-button">
             Classes
+            </div>
           </Link>
           <Link
             className="font-medium text-gray-900  dark:text-gray-50"
             href="/claimReward"
           >
+            <div className="tab-button">
             Claim Reward
+            </div>
           </Link>
           <Link
             className="font-medium text-gray-900  dark:text-gray-50"
             href="#"
           >
+            <div className="tab-button">
             Buy Raffle
+            </div>
           </Link>
         </nav>
       </header>
