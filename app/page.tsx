@@ -10,17 +10,6 @@ import avatar4 from '@/assets/images/avatar4.jpeg';
 import avatar5 from '@/assets/images/avatar5.jpeg';
 import avatar6 from '@/assets/images/avatar6.jpeg';
 
-type Class = {
-  id: string;
-  name: string;
-  description: string;
-  location: {
-    name: string;
-    lat: string;
-    lng: string;
-  };
-};
-
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
 export default async function Component() {

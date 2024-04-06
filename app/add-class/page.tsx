@@ -4,7 +4,15 @@ import { useState } from 'react';
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { type ClassData } from '@/actions/createClass';
+import createClass, { type ClassData } from '@/actions/createClass';
+import LocationInput from "@/components/add-class/locationInput";
+
+const days: ('monday'| 'tuesday'| 'wednesday'| 'thursday'| 'friday'| 'saturday'| 'sunday')[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+function capitalizeFirstLetter(string: string) {
+  if (!string) return string;
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 export default function Component() {
   // State to hold form data (optional, for demonstration)
@@ -40,7 +48,7 @@ export default function Component() {
       return;
     }
 
-
+    createClass(formData);
   };
 
   // Function to handle form data changes
@@ -49,12 +57,13 @@ export default function Component() {
     const { name, value, type, checked } = event.target;
     setFormData(prevFormData => {
       // Handling checkboxes separately
-      if (type === 'checkbox') {
+      if (event.type === 'click') {
         return {
           ...prevFormData,
           days: {
             ...prevFormData.days,
-            [name]: checked,
+            // @ts-expect-error all good
+            [event.target.id]: !prevFormData.days[event.target.id],
           },
         };
       }
@@ -78,25 +87,25 @@ export default function Component() {
           <Input className="w-full max-w-sm" id="className" name="className" placeholder="Class Name" value={formData.className} onChange={handleChange} />
         </div>
         <div className="space-y-1">
-          <Label htmlFor="startTime">Start Time</Label>
-          <Input defaultValue="13:37" id="startTime" name="startTime" type="time" value={formData.time} onChange={handleChange} />
+          <Label htmlFor="time">Start Time</Label>
+          <Input defaultValue="13:37" id="time" name="time" type="time" value={formData.time} onChange={handleChange} />
         </div>
         <div className="space-y-1">
           <fieldset className="space-y-2">
             <legend className="text-sm font-medium">Days</legend>
-            {/* Repeat for each day */}
-            <div className="flex items-center gap-2">
-              <Checkbox id="monday" name="monday" checked={formData.days.monday} onChange={handleChange} />
-              <label className="text-sm font-normal leading-none" htmlFor="monday">
-                Monday
-              </label>
-            </div>
-            {/* Repeat above block for other weekdays, adjusting id, name, and checked accordingly */}
+            {days.map(d => (
+              <div key={d} className="flex items-center gap-2">
+                <Checkbox id={d} name={d} checked={formData.days[d]} onClick={handleChange} />
+                <label className="text-sm font-normal leading-none" htmlFor={d}>
+                  {capitalizeFirstLetter(d)}
+                </label>
+              </div>
+            ))}
           </fieldset>
         </div>
         <div className="space-y-1">
           <Label htmlFor="location">Location</Label>
-          <Input className="w-full max-w-sm" id="location" name="location" placeholder="Location" value={formData.location.name} onChange={handleChange} />
+          <LocationInput handleChange={handleChange}/>
         </div>
         <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Submit
