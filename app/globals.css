@@ -74,3 +74,10 @@
       @apply bg-background text-foreground;
     }
   }
+
+  .tab-button{
+  }
+
+  .tab-button:hover{
+    color: gray;
+  }

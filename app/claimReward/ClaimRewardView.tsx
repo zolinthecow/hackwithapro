@@ -1,9 +1,12 @@
 "use client"
+import { useRouter } from 'next/router';
 import prisma from "@/prisma";
 import gems from '@/assets/images/gems.png';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './ClaimReward.module.css';
+import Link from "next/link";
+import updateClaimTime from '@/actions/updateClaimTime';
 
 function calculateDistance(c1:any, c2:any) {
     const R = 6371e3; // earth radius in meters
@@ -35,11 +38,10 @@ function isTimeWithinOneHour(time: string): boolean {
 
 export default function ClaimRewardView({classes}:any) {
   const [isClose, setIsClose] = useState<null|boolean>(null);
+  const [alreadClaimed, setAlreadyClaimed] = useState<boolean>(false);
   const [notAlloed, setNotAllowed] = useState<boolean>(false);
 //   const target: Coordinates = {latitude: 34.03891167656135, longitude: -118.43653231621187};
   const proximityThreshold = 500;
-
-  console.log(classes);
 
   useEffect(() => {
     const update_IsClose = async () => {
@@ -50,9 +52,16 @@ export default function ClaimRewardView({classes}:any) {
                 for(let i = 0; i<classes.length; i++){
                     let valid_time = false;
                     for(let j = 0; j<classes[i].classTimes.length; j++){
-                        if(isTimeWithinOneHour(classes[i].classTimes[j].startTime) && classes[i].classTimes[j].dayOfWeek == current_day){
-                            valid_time = true;
-                            break;
+                        if(
+                            isTimeWithinOneHour(classes[i].classTimes[j].startTime) && 
+                            classes[i].classTimes[j].dayOfWeek == current_day 
+                        ){
+                            if (classes[i].classTimes[j].lastClaimTimestamp < Date.now() - 24*60*60*1000) {
+                                valid_time = true;
+                                break;
+                            } else {
+                                setAlreadyClaimed(true);
+                            }
                         }
                     }
                     if(!valid_time) continue;
@@ -69,6 +78,30 @@ export default function ClaimRewardView({classes}:any) {
     update_IsClose();
   }, [classes]);
 
+  const claimReward = async () => {
+    let current_day = new Date().getDay();
+    for(let i = 0; i<classes.length; i++){
+        let valid_time = false;
+        for(let j = 0; j<classes[i].classTimes.length; j++){
+            if(
+                isTimeWithinOneHour(classes[i].classTimes[j].startTime) && 
+                classes[i].classTimes[j].dayOfWeek == current_day && 
+                classes[i].classTimes[j].lastClaimTimestamp < Date.now() - 24*60*60*1000
+            ){
+                console.log('found valid time')
+                valid_time = true;
+                classes[i].classTimes[j].lastClaimTimestamp = Date.now()
+                await updateClaimTime(classes[i].classTimes[j].id);
+                console.log('reloading!')
+                window.location.reload();
+                break;
+            }
+        }
+        if(valid_time) break;
+    }
+  }
+
+
     return <div className={styles.container}>
         {
         isClose == null
@@ -84,7 +117,7 @@ export default function ClaimRewardView({classes}:any) {
                 className={`${styles.image_close}`}
             />
             <div className={`${styles.title_close}`}>Claim Reward!</div>
-            <button className={`${styles.button_close}`}>
+            <button className={`${styles.button_close}`} onClick={claimReward}>
                 Claim Reward!
             </button>
             </>
@@ -97,10 +130,16 @@ export default function ClaimRewardView({classes}:any) {
                 height={150}
                 className={`${styles.image_notClose}`}
             />
-            <div className={`${styles.title_notClose}`}>You're not close enough to claim your reward ☹️</div>
-            <button className={`${styles.button_notClose}`}>
+            <div className={`${styles.title_notClose}`}>
+                {
+                    alreadClaimed
+                    ? "You already claimed your reward today! 😊"
+                    : "You're not close enough to claim your reward ☹️"
+                }
+            </div>
+            <Link className={`${styles.button_notClose}`} href="/">
                 Go Back
-            </button>
+            </Link>
             </>
         }
     </div>

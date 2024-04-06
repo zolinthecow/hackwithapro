@@ -9,6 +9,6 @@ export default async function ClaimReward() {
     },
   });
 
-  return <ClaimRewardView classes={classes} />;
+  return <ClaimRewardView classes={classes}/>;
 }
 
