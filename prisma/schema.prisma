@@ -28,13 +28,23 @@ model Location {
 }
 
 model ClassTime {
-  id        String @id
-  classId   String
-  startTime String
-  dayOfWeek Int
-  lastClaimTimestamp  BigInt
+  id                 String @id
+  classId            String
+  startTime          String
+  dayOfWeek          Int
+  lastClaimTimestamp BigInt
 
   class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   @@index([classId], name: "time_class_idx")
+}
+
+model Gems {
+  id     String @id
+  amount Int
+}
+
+model Cents {
+  id     String @id
+  amount Int
 }
