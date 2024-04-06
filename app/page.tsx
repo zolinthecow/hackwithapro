@@ -6,13 +6,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-type Class = {
-  id: string;
-  name: string;
-  description: string;
-  location: string;
-};
-
 export default function Component() {
   return (
     <div className="flex flex-col min-h-screen">
