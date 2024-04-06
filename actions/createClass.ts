@@ -13,6 +13,8 @@ export type ClassData = {
     wednesday: boolean;
     thursday: boolean;
     friday: boolean;
+    saturday: boolean;
+    sunday: boolean;
   },
   location: {
     name: string;
