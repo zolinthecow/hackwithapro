@@ -13,6 +13,8 @@ export type ClassData = {
     wednesday: boolean;
     thursday: boolean;
     friday: boolean;
+    saturday: boolean;
+    sunday: boolean;
   },
   location: {
     name: string;
@@ -27,6 +29,8 @@ const dayOfWeekMap = {
   wednesday: 3,
   thursday: 4,
   friday: 5,
+  saturday: 6,
+  sunday: 0
 };
 
 const createClass = async (classData: ClassData) => {

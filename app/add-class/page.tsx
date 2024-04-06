@@ -17,6 +17,8 @@ export default function Component() {
       wednesday: false,
       thursday: false,
       friday: false,
+      saturday: false,
+      sunday: false
     },
     location: {
       name: '',
