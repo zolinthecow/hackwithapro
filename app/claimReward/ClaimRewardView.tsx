@@ -4,6 +4,7 @@ import gems from '@/assets/images/gems.png';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './ClaimReward.module.css';
+import Link from "next/link";
 
 function calculateDistance(c1:any, c2:any) {
     const R = 6371e3; // earth radius in meters
@@ -50,7 +51,11 @@ export default function ClaimRewardView({classes}:any) {
                 for(let i = 0; i<classes.length; i++){
                     let valid_time = false;
                     for(let j = 0; j<classes[i].classTimes.length; j++){
-                        if(isTimeWithinOneHour(classes[i].classTimes[j].startTime) && classes[i].classTimes[j].dayOfWeek == current_day){
+                        if(
+                            isTimeWithinOneHour(classes[i].classTimes[j].startTime) && 
+                            classes[i].classTimes[j].dayOfWeek == current_day && 
+                            classes[i].classTimes[j].lastClaimTimestamp < Date.now() - 24*60*60*1000
+                        ){
                             valid_time = true;
                             break;
                         }
@@ -98,9 +103,9 @@ export default function ClaimRewardView({classes}:any) {
                 className={`${styles.image_notClose}`}
             />
             <div className={`${styles.title_notClose}`}>You're not close enough to claim your reward ☹️</div>
-            <button className={`${styles.button_notClose}`}>
+            <Link className={`${styles.button_notClose}`} href="/">
                 Go Back
-            </button>
+            </Link>
             </>
         }
     </div>

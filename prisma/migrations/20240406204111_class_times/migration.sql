@@ -4,6 +4,7 @@ CREATE TABLE "ClassTime" (
     "classId" TEXT NOT NULL,
     "startTime" TEXT NOT NULL,
     "dayOfWeek" INTEGER NOT NULL,
+    "lastClaimTimestamp" INTEGER NOT NULL,
     CONSTRAINT "ClassTime_classId_fkey" FOREIGN KEY ("classId") REFERENCES "Class" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 

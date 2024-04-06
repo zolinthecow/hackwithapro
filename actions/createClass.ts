@@ -51,6 +51,7 @@ const createClass = async (classData: ClassData) => {
           startTime: classData.time,
           // @ts-expect-error its okay
           dayOfWeek: dayOfWeekMap[k],
+          lastClaimTimestamp: 0,
         })),
       },
     },

@@ -32,6 +32,7 @@ model ClassTime {
   classId   String
   startTime String
   dayOfWeek Int
+  lastClaimTimestamp  Int
 
   class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
 
