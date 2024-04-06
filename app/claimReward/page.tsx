@@ -25,7 +25,7 @@ type Coordinates = {
 }
 
 export default function ClaimReward() {
-  const [isClose, setIsClose] = useState(false);
+  const [isClose, setIsClose] = useState<null|Boolean>(null);
   const target: Coordinates = {latitude: 34.03891167656135, longitude: -118.43653231621187};
   const proximityThreshold = 500;
 
@@ -33,13 +33,19 @@ export default function ClaimReward() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const distance = calculateDistance(position.coords, target);
+        console.log(distance);
         setIsClose(distance <= proximityThreshold);
       });
     }
   }, []);
 
-    return isClose
-        ? <div className={styles.container}>
+    return <div className={styles.container}>
+        {
+        isClose == null
+        ? <div className={`${styles.title_close}`}>Loading...</div>
+        : isClose
+        ? 
+            <>
             <Image
                 src={gems}
                 alt="Reward Image"
@@ -51,8 +57,9 @@ export default function ClaimReward() {
             <button className={`${styles.button_close}`}>
                 Claim Reward!
             </button>
-        </div>
-        : <div className={styles.container}>
+            </>
+        :
+            <>
             <Image
                 src={gems}
                 alt="Reward Image"
@@ -62,8 +69,10 @@ export default function ClaimReward() {
             />
             <div className={`${styles.title_notClose}`}>You're not close enough to claim your reward ☹️</div>
             <button className={`${styles.button_notClose}`}>
-                Claim Reward!
+                Go Back
             </button>
-        </div>
+            </>
+        }
+    </div>
 }
 
