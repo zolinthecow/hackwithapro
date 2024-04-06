@@ -76,103 +76,35 @@ export default function Component() {
             <Button size="sm">New Class</Button>
           </div>
           <div className="border rounded-lg divide-y">
-            {classes.map((c, idx) => (
-              <div key={c.id} className="grid grid-cols-3 items-stretch text-sm">
+            {classes.map((classInfo) => (
+              <div key={classInfo.id} className="grid grid-cols-3 items-stretch text-sm">
                 <div className="flex items-center justify-center p-4">
-                  <Image src={avatarImages[idx]} alt={c.name} height={40} width={40} objectFit={'cover'} className="rounded-full object-cover" />
+                  <img
+                    alt="Avatar"
+                    className="rounded-full object-cover"
+                    height="40"
+                    src="/placeholder.svg"
+                    style={{
+                      aspectRatio: '40/40',
+                      objectFit: 'cover',
+                    }}
+                    width="40"
+                  />
                 </div>
                 <div className="flex flex-col justify-center p-4">
-                  <h3 className="font-semibold">{c.name}</h3>
+                  <h3 className="font-semibold">{classInfo.name}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {c.description}
+                    {classInfo.description}
                   </p>
                 </div>
                 <div className="flex flex-col justify-center p-4">
-                  <h3 className="font-semibold">{c.location.name}</h3>
+                  <h3 className="font-semibold">{classInfo.location.name}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {classInfo.id}
+                  </p>
                 </div>
               </div>
             ))}
-            <div className="grid grid-cols-3 items-stretch text-sm">
-              <div className="flex items-center justify-center p-4">
-                <img
-                  alt="Avatar"
-                  className="rounded-full object-cover"
-                  height="40"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: '40/40',
-                    objectFit: 'cover',
-                  }}
-                  width="40"
-                />
-              </div>
-              <div className="flex flex-col justify-center p-4">
-                <h3 className="font-semibold">Biology 101</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Introduction to Biology
-                </p>
-              </div>
-              <div className="flex flex-col justify-center p-4">
-                <h3 className="font-semibold">Room 203</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Science
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 items-stretch text-sm">
-              <div className="flex items-center justify-center p-4">
-                <img
-                  alt="Avatar"
-                  className="rounded-full object-cover"
-                  height="40"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: '40/40',
-                    objectFit: 'cover',
-                  }}
-                  width="40"
-                />
-              </div>
-              <div className="flex flex-col justify-center p-4">
-                <h3 className="font-semibold">Chemistry 101</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Basic Chemistry Concepts
-                </p>
-              </div>
-              <div className="flex flex-col justify-center p-4">
-                <h3 className="font-semibold">Room 205</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Chemistry
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 items-stretch text-sm">
-              <div className="flex items-center justify-center p-4">
-                <img
-                  alt="Avatar"
-                  className="rounded-full object-cover"
-                  height="40"
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: '40/40',
-                    objectFit: 'cover',
-                  }}
-                  width="40"
-                />
-              </div>
-              <div className="flex flex-col justify-center p-4">
-                <h3 className="font-semibold">Mathematics 101</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Introduction to Algebra
-                </p>
-              </div>
-              <div className="flex flex-col justify-center p-4">
-                <h3 className="font-semibold">Room 207</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Mathematics
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </main>
