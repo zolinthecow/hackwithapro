@@ -57,7 +57,7 @@ export default function Component() {
           </Link>
           <Link
             className="font-medium text-gray-900  dark:text-gray-50"
-            href="#"
+            href="/claimReward"
           >
             Claim Reward
           </Link>
