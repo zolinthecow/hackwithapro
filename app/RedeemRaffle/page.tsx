@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import prisma from "@/prisma";
 
 function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setInputFive}: {setInputOne: any; setInputTwo: any; setInputThree: any; setInputFour: any; setInputFive: any;}) {
     const handleInputChangeOne= (event: any) => {
@@ -65,6 +66,22 @@ function RaffleCard({cost}: {cost: number }) {
     const [inputFour, setInputFour] = useState(0);
     const [inputFive, setInputFive] = useState(0);
 
+    const [balance, setBalance] = useState(0);
+
+    useEffect(() => {
+        const fetchBalance = async () => {
+            try {
+                const currentBalance = await prisma.class.getMany();
+                setBalance(currentBalance);
+            } catch(error) {
+                console.error('Error in initializing error', error)
+            }
+            const currentBalance = await prisma.class.findMany();
+        }
+        
+        fetchBalance();
+    }, [])
+
     const onClickBuyRaffle = (cost: number, balance: number) => {
         if (balance < cost) {
             return;
@@ -82,11 +99,10 @@ function RaffleCard({cost}: {cost: number }) {
             // indicate win TODO
             return
         }
-
+        console.error('doesn\'t match')
         // indicate loss
     }
 
-    const balance = -1;// to be updated
     return (
         <div className="w-full rounded overflow-hidden shadow-lg">
             <div className="w-full">
@@ -104,6 +120,6 @@ function RaffleCard({cost}: {cost: number }) {
 
 export default function RedeemRaffle() {
     return (
-        <RaffleCard cost={1} />
+        <RaffleCard cost={-100} />
     );
 }
