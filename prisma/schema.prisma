@@ -13,16 +13,16 @@ datasource db {
 model Class {
   id         String      @id
   name       String
-  locations  Location[]
   classTimes ClassTime[]
+  location   Location?
 }
 
 model Location {
   id      String @id
-  classId String
+  class   Class  @relation(fields: [classId], references: [id])
+  classId String @unique
   lat     String
   lng     String
-  class   Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   @@index([classId], name: "location_class_idx")
 }

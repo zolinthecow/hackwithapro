@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import prisma from "@/prisma";
 import { Button } from '@/components/ui/button';
 
 import avatar1 from '@/assets/images/avatar1.jpeg';
@@ -22,19 +23,13 @@ type Class = {
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
-export default function Component() {
-  const classes: Class[] = [
-    {
-      id: 'abcd',
-      name: 'CS35L',
-      description: 'Intro to Software Construction',
-      location: {
-        name: 'La Kretz 110',
-        lat: '34.067650',
-        lng: '-118.440536',
-      },
+export default async function Component() {
+  const classes = await prisma.class.findMany({
+    include: {
+      location: true,
+      classTimes: true,
     },
-  ];
+  });
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -82,12 +77,9 @@ export default function Component() {
                 </div>
                 <div className="flex flex-col justify-center p-4">
                   <h3 className="font-semibold">{c.name}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {c.description}
-                  </p>
                 </div>
                 <div className="flex flex-col justify-center p-4">
-                  <h3 className="font-semibold">{c.location.name}</h3>
+                  <h3 className="font-semibold">{(c.location?.lat ?? '') + (c.location?.lng ?? '')}</h3>
                 </div>
               </div>
             ))}

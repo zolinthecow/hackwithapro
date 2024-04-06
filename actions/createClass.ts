@@ -34,14 +34,14 @@ const createClass = async (classData: ClassData) => {
     data: {
       id: ulid(),
       name: classData.className,
-      Location: {
+      location: {
         create: {
           id: ulid(),
           lat: classData.location.lat,
           lng: classData.location.lng,
         }
       },
-      ClassTime: {
+      classTimes: {
         create: Object.entries(classData.days).filter(([k, v]) => v).map(([k, v]) => ({
           id: ulid(),
           startTime: classData.time,
