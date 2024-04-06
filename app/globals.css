@@ -75,9 +75,9 @@
     }
   }
 
-  .tab-buttons{
+  .tab-button{
   }
 
-  .tab-buttons:hover{
+  .tab-button:hover{
     color: gray;
   }
