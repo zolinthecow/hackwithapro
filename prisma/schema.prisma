@@ -11,9 +11,10 @@ datasource db {
 }
 
 model Class {
-  id       String     @id
-  name     String
-  Location Location[]
+  id         String      @id
+  name       String
+  locations  Location[]
+  classTimes ClassTime[]
 }
 
 model Location {
@@ -24,4 +25,15 @@ model Location {
   class   Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
 
   @@index([classId], name: "location_class_idx")
+}
+
+model ClassTime {
+  id        String @id
+  classId   String
+  startTime String
+  dayOfWeek Int
+
+  class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@index([classId], name: "time_class_idx")
 }

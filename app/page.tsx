@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/32QtRsCVu75
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
@@ -73,7 +68,11 @@ export default function Component() {
         <div className="mx-auto container flex flex-col gap-4 md:gap-8">
           <div className="flex items-center gap-4">
             <h1 className="text-2xl font-semibold">Classes</h1>
-            <Button size="sm">New Class</Button>
+            <Button size={"sm"} asChild>
+              <Link href={"add-class"}>
+                New Class
+              </Link>
+            </Button>
           </div>
           <div className="border rounded-lg divide-y">
             {classes.map((c, idx) => (
