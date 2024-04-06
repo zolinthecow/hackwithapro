@@ -4,9 +4,43 @@
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+import avatar1 from '@/assets/images/avatar1.jpeg';
+import avatar2 from '@/assets/images/avatar2.jpeg';
+import avatar3 from '@/assets/images/avatar3.jpeg';
+import avatar4 from '@/assets/images/avatar4.jpeg';
+import avatar5 from '@/assets/images/avatar5.jpeg';
+import avatar6 from '@/assets/images/avatar6.jpeg';
+
+type Class = {
+  id: string;
+  name: string;
+  description: string;
+  location: {
+    name: string;
+    lat: string;
+    lng: string;
+  };
+};
+
+const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
+
 export default function Component() {
+  const classes: Class[] = [
+    {
+      id: 'abcd',
+      name: 'CS35L',
+      description: 'Intro to Software Construction',
+      location: {
+        name: 'La Kretz 110',
+        lat: '34.067650',
+        lng: '-118.440536',
+      },
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 flex items-center h-14 gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
@@ -42,6 +76,22 @@ export default function Component() {
             <Button size="sm">New Class</Button>
           </div>
           <div className="border rounded-lg divide-y">
+            {classes.map((c, idx) => (
+              <div key={c.id} className="grid grid-cols-3 items-stretch text-sm">
+                <div className="flex items-center justify-center p-4">
+                  <Image src={avatarImages[idx]} alt={c.name} height={40} width={40} objectFit={'cover'} className="rounded-full object-cover" />
+                </div>
+                <div className="flex flex-col justify-center p-4">
+                  <h3 className="font-semibold">{c.name}</h3>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {c.description}
+                  </p>
+                </div>
+                <div className="flex flex-col justify-center p-4">
+                  <h3 className="font-semibold">{c.location.name}</h3>
+                </div>
+              </div>
+            ))}
             <div className="grid grid-cols-3 items-stretch text-sm">
               <div className="flex items-center justify-center p-4">
                 <img

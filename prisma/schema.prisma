@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Class {
+  id       String     @id
+  name     String
+  Location Location[]
+}
+
+model Location {
+  id      String @id
+  classId String
+  lat     String
+  lng     String
+  class   Class  @relation(fields: [classId], references: [id], onDelete: Cascade)
+
+  @@index([classId], name: "location_class_idx")
+}
