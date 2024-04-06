@@ -93,13 +93,6 @@ export default function Component() {
         <div className="space-y-1">
           <fieldset className="space-y-2">
             <legend className="text-sm font-medium">Days</legend>
-            <div key={'monday'} className="flex items-center gap-2">
-              <Checkbox id={'monday'} name={'monday'} checked={formData.days.monday} onChange={handleChange} />
-              <label className="text-sm font-normal leading-none" htmlFor={'monday'}>
-                Monday
-              </label>
-            </div>
-
             {days.map(d => (
               <div key={d} className="flex items-center gap-2">
                 <Checkbox id={d} name={d} checked={formData.days[d]} onClick={handleChange} />
