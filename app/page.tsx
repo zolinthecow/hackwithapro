@@ -70,29 +70,16 @@ export default async function Component() {
             </Button>
           </div>
           <div className="border rounded-lg divide-y">
-            {classes.map((classInfo) => (
+            {classes.map((classInfo, idx) => (
               <div key={classInfo.id} className="grid grid-cols-3 items-stretch text-sm">
                 <div className="flex items-center justify-center p-4">
-                  <img
-                    alt="Avatar"
-                    className="rounded-full object-cover"
-                    height="40"
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: '40/40',
-                      objectFit: 'cover',
-                    }}
-                    width="40"
-                  />
+                  <Image src={avatarImages[idx]} alt={classInfo.name} height={40} width={40} objectFit={'cover'} className="rounded-full object-cover" />
                 </div>
                 <div className="flex flex-col justify-center p-4">
                   <h3 className="font-semibold">{classInfo.name}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {classInfo.description}
-                  </p>
                 </div>
                 <div className="flex flex-col justify-center p-4">
-                  <h3 className="font-semibold">{classInfo.location.name}</h3>
+                  <h3 className="font-semibold">{classInfo.location?.lat}</h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {classInfo.id}
                   </p>
