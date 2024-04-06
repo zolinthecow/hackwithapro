@@ -10,7 +10,10 @@ type Class = {
   id: string;
   name: string;
   description: string;
-  location: string;
+  location: {
+    lat: string;
+    lng: string;
+  };
 };
 
 export default function Component() {
