@@ -4,7 +4,7 @@ export type Class = {
   description: string;
   location: string;
   start: Time;
-  end: Time:
+  end: Time;
   day_of_week: number;
 };
 export type Time = {
