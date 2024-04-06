@@ -6,5 +6,7 @@ type Props = {
 };
 
 export const Button: React.FC<Props> = ({ size, children }) => {
-  return <div> {children} </div>;
+  return <button> {children} </button>;
+  
+
 };
