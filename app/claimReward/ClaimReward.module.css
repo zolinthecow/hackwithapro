@@ -38,6 +38,12 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
+
+.button_notClose:hover{
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
 .button_notClose {
   padding: 15px 30px;
   font-size: 24px;
