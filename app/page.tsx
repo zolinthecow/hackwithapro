@@ -18,6 +18,12 @@ export default function Component() {
                                         <Link className="font-medium text-gray-900  dark:text-gray-50" href="#">
                                                 Classes
                                         </Link>
+                                        <Link className="font-medium text-gray-900  dark:text-gray-50" href="#">
+                                                Claim Reward
+                                        </Link>
+                                        <Link className="font-medium text-gray-900  dark:text-gray-50" href="#">
+                                                Buy Raffle
+                                        </Link>
                                 </nav>
                         </header>
                         <main className="flex-1 p-4 md:p-6">
