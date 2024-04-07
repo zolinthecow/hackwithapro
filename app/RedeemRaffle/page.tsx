@@ -121,6 +121,9 @@ function RaffleCard({cost}: {cost: number }) {
         if (inputFive == randomFive) {
             matches++;
         }
+        if (randomOne == 0 && randomTwo == 0 && randomThree == 0 && randomFour == 0 && randomFive == 0) {
+            return
+        }
         if (matches == 5) {
             setOutcomeText('You win the JACKPOT!');
             updateCentsAmountByUserId(userId, centsBalance + 200);
