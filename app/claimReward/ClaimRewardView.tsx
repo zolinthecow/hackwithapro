@@ -7,6 +7,8 @@ import Image from 'next/image';
 import styles from './ClaimReward.module.css';
 import Link from "next/link";
 import updateClaimTime from '@/actions/updateClaimTime';
+import updateGemsAmountByUserId from '@/actions/updateGems';
+import getGemsAmountByUserId from '@/actions/getGems';
 
 function calculateDistance(c1:any, c2:any) {
     const R = 6371e3; // earth radius in meters
@@ -36,7 +38,7 @@ function isTimeWithinOneHour(time: string): boolean {
   return startTime <= currentTime && currentTime <= endTime;
 }
 
-export default function ClaimRewardView({classes}:any) {
+export default function ClaimRewardView({classes,userId}:any) {
   const [isClose, setIsClose] = useState<null|boolean>(null);
   const [alreadClaimed, setAlreadyClaimed] = useState<boolean>(false);
   const [notAlloed, setNotAllowed] = useState<boolean>(false);
@@ -80,6 +82,12 @@ export default function ClaimRewardView({classes}:any) {
 
   const claimReward = async () => {
     let current_day = new Date().getDay();
+    let classes_per_month = 0;
+    for(let i = 0; i<classes.length; i++){
+        for(let j = 0; j<classes[i].classTimes.length; j++){
+            classes_per_month += 4;
+        }
+    }
     for(let i = 0; i<classes.length; i++){
         let valid_time = false;
         for(let j = 0; j<classes[i].classTimes.length; j++){
@@ -92,6 +100,11 @@ export default function ClaimRewardView({classes}:any) {
                 valid_time = true;
                 classes[i].classTimes[j].lastClaimTimestamp = Date.now()
                 await updateClaimTime(classes[i].classTimes[j].id);
+                let update_amount = Math.floor(250/classes_per_month);
+                await updateGemsAmountByUserId(
+                    userId,
+                    await getGemsAmountByUserId(userId)+update_amount
+                );
                 console.log('reloading!')
                 window.location.reload();
                 break;
