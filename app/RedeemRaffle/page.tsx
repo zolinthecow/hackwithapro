@@ -24,7 +24,7 @@ function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setI
     }
 
     return <div className="w-full">
-        <label className="block text-center uppercase tracking-wide text-gray-700 text-lg font-extrabold mt-4 mb-2" for="grid-zip">
+        <label className="block text-center uppercase tracking-wide text-gray-700 text-lg font-extrabold mt-4 mb-2" htmlFor="grid-zip">
             Pick Five Numbers
         </label>
 

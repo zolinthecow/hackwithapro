@@ -19,6 +19,9 @@ export default async function Component() {
   const session = await getSession();
   const userId = session?.user.sub;
   const classes = await prisma.class.findMany({
+    where: {
+      userId: user?.user.sub,
+    },
     include: {
       location: true,
       classTimes: true,

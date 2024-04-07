@@ -10,7 +10,7 @@ async function getCentsAmountByUserId(userId:string) {
     },
   });
 
-    return centsRecord.amount;
+    return centsRecord?.amount || 0;
 }
 
 export default getCentsAmountByUserId;
