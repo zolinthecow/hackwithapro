@@ -55,7 +55,7 @@ model ClassTime {
 model Gems {
   id     String @id
   userId String @unique
-  amount Int
+  amount Int    @default(0)
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId], name: "gems_user_id_idx")
@@ -64,7 +64,7 @@ model Gems {
 model Cents {
   id     String @id
   userId String @unique
-  amount Int
+  amount Int    @default(0)
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId], name: "cents_user_id_idx")
