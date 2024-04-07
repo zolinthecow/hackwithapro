@@ -12,7 +12,7 @@ export default function LocationInput(props: Props) {
     // You can add additional logic here to handle the selected address,
     // such as geocoding it to get lat/long or storing the address in state.
     console.log(address);
-    const geocodeResp = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`, { method: 'GET' });
+    const geocodeResp = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?place_id=${address.value.place_id}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`, { method: 'GET' });
     const geocodeJson = await geocodeResp.json();
     props.handleChange({
       target: {
