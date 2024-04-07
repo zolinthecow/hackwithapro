@@ -15,6 +15,6 @@ export default async function ClaimReward() {
     },
   });
 
-  return <ClaimRewardView classes={classes} userId={userId/>;
+  return <ClaimRewardView classes={classes} userId={userId}/>;
 }
 
