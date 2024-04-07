@@ -37,12 +37,10 @@ export default async function Component() {
         <nav className="flex items-center gap-4 ml-auto">
           <Link
             className="font-medium text-gray-900  dark:text-gray-50"
-            href="#"
+            href="https://table7-hack.vercel.app/"
           >
             <div className="tab-button">
-            <Link href="https://table7-hack.vercel.app/">
             Classes
-            </Link>
             </div>
           </Link>
           <Link
