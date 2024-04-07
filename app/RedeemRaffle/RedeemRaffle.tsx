@@ -185,7 +185,7 @@ function RaffleCard({cost, userId}: {cost: number; userId:any; }) {
         console.log(inputOne, inputTwo, inputThree, inputFour, inputFive, randomOne, randomTwo, randomThree, randomFour, randomFive)
 
         console.log(`this doesn't hit ${userId}`)
-        updateGemsAmountByUserId(userId, balance-(cost/10))
+        updateGemsAmountByUserId(userId, balance-cost)
         if (matches == 5) {
             setOutcomeText('You win the JACKPOT!');
             updateCentsAmountByUserId(userId, centsBalance+100000)
@@ -257,7 +257,7 @@ export default function RedeemRaffle({userId}: {userId: any}) {
             <main className="flex-1 p-4 md:p-6">
                 <div className="flex justify-center items-center mt-10">
                     <div className="max-w-3xl w-full"> {/* Adjust the max-width as needed */}
-                        <RaffleCard cost={100} userId={userId} />
+                        <RaffleCard cost={10} userId={userId} />
                     </div>
                 </div>
             </main>
