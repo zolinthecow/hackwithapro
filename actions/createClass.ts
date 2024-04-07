@@ -6,6 +6,7 @@ import { ulid } from 'ulid';
 
 export type ClassData = {
   className: string;
+  userId: string;
   time: string;
   days: {
     monday: boolean;
@@ -38,9 +39,11 @@ const createClass = async (classData: ClassData) => {
     data: {
       id: ulid(),
       name: classData.className,
+      userId: classData.userId,
       location: {
         create: {
           id: ulid(),
+          name: classData.location.name,
           lat: classData.location.lat,
           lng: classData.location.lng,
         }
@@ -51,7 +54,7 @@ const createClass = async (classData: ClassData) => {
           startTime: classData.time,
           // @ts-expect-error its okay
           dayOfWeek: dayOfWeekMap[k],
-          lastClaimTimestamp: 0,
+          lastClaimedTimeStamp: 0,
         })),
       },
     },

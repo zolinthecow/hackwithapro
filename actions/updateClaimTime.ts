@@ -6,7 +6,7 @@ await prisma.classTime.update({
         id: classTimeId,
     },
     data: {
-        lastClaimTimestamp: Date.now()
+        lastClaimedTimeStamp: Date.now()
     },
 });
 }

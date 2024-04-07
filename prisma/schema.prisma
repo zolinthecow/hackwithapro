@@ -10,15 +10,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String  @id
+  nickname String
+  classes  Class[]
+  gems     Gems?
+  cents    Cents?
+}
+
 model Class {
   id         String      @id
+  userId     String
   name       String
   classTimes ClassTime[]
   location   Location?
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "class_user_id_idx")
 }
 
 model Location {
   id      String @id
+  name    String @default("")
   class   Class  @relation(fields: [classId], references: [id])
   classId String @unique
   lat     String
@@ -28,11 +41,11 @@ model Location {
 }
 
 model ClassTime {
-  id                 String @id
-  classId            String
-  startTime          String
-  dayOfWeek          Int
-  lastClaimTimestamp BigInt
+  id                   String @id
+  classId              String
+  startTime            String
+  dayOfWeek            Int
+  lastClaimedTimeStamp BigInt
 
   class Class @relation(fields: [classId], references: [id], onDelete: Cascade)
 
@@ -41,10 +54,18 @@ model ClassTime {
 
 model Gems {
   id     String @id
+  userId String @unique
   amount Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "gems_user_id_idx")
 }
 
 model Cents {
   id     String @id
+  userId String @unique
   amount Int
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], name: "cents_user_id_idx")
 }
