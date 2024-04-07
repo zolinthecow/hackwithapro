@@ -104,7 +104,7 @@ export default function ClaimRewardView({classes,userId}:any) {
                 valid_time = true;
                 classes[i].classTimes[j].lastClaimedTimeStamp = Date.now()
                 await updateClaimTime(classes[i].classTimes[j].id);
-                let update_amount = Math.floor(250/classes_per_month);
+                let update_amount = Math.floor(1000/classes_per_month);
                 await updateGemsAmountByUserId(
                     userId,
                     await getGemsAmountByUserId(userId)+update_amount
