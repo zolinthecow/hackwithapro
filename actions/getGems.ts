@@ -10,7 +10,7 @@ async function getGemsAmountByUserId(userId:string) {
     },
   });
 
-    return gemsRecord.amount;
+    return gemsRecord?.amount || 0;
 }
 
 export default getGemsAmountByUserId;
