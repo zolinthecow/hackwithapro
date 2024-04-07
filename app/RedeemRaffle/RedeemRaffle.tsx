@@ -185,10 +185,10 @@ function RaffleCard({cost, userId}: {cost: number; userId:any; }) {
         console.log(inputOne, inputTwo, inputThree, inputFour, inputFive, randomOne, randomTwo, randomThree, randomFour, randomFive)
 
         console.log(`this doesn't hit ${userId}`)
-        updateGemsAmountByUserId(userId, balance-cost)
+        updateGemsAmountByUserId(userId, balance-(cost/10))
         if (matches == 5) {
             setOutcomeText('You win the JACKPOT!');
-            updateCentsAmountByUserId(userId, centsBalance+200)
+            updateCentsAmountByUserId(userId, centsBalance+1000)
         } else if (matches > 0 && matches < 5) {
             setOutcomeText(`You matched ${matches} of the numbers!`)
             updateCentsAmountByUserId(userId, centsBalance+(20*matches))
