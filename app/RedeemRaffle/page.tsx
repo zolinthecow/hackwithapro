@@ -69,11 +69,11 @@ function RaffleCard({cost}: {cost: number }) {
     const [randomFour, setRandomFour] = useState(0);
     const [randomFive, setRandomFive] = useState(0);
 
-    const [inputOne, setInputOne] = useState(0);
-    const [inputTwo, setInputTwo] = useState(0);
-    const [inputThree, setInputThree] = useState(0);
-    const [inputFour, setInputFour] = useState(0);
-    const [inputFive, setInputFive] = useState(0);
+    const [inputOne, setInputOne] = useState(10);
+    const [inputTwo, setInputTwo] = useState(10);
+    const [inputThree, setInputThree] = useState(10);
+    const [inputFour, setInputFour] = useState(10);
+    const [inputFive, setInputFive] = useState(10);
 
     const [centsBalance, setCentsBalance] = useState(0);
     const [gemsBalance, setGemsBalance] = useState(0);
@@ -82,6 +82,7 @@ function RaffleCard({cost}: {cost: number }) {
     const [userId, setUserId] = useState('');
 
     useEffect(() => {
+        if(inputOne>=0&&inputOne<=9&&inputTwo>=0&&inputTwo<=9&&inputThree>=0&&inputThree<=9&&inputFour>=0&&inputFour<=9&&inputFive>=0&&inputFive<=9){
         let matches = 0;
         if (inputOne == randomOne) {
             matches++;
@@ -98,7 +99,6 @@ function RaffleCard({cost}: {cost: number }) {
         if (inputFive == randomFive) {
             matches++;
         }
-    
         if (matches == 5) {
             setOutcomeText('You win the JACKPOT!');
             updateCentsAmountByUserId(userId, centsBalance + 200);
@@ -108,6 +108,11 @@ function RaffleCard({cost}: {cost: number }) {
         } else {
             setOutcomeText('You lost...');
         }
+    }
+    else{
+        setOutcomeText(' ');
+    }
+        
     }, [randomOne, randomTwo, randomThree, randomFour, randomFive, inputOne, inputTwo, inputThree, inputFour, inputFive, userId, centsBalance]);
     
 
