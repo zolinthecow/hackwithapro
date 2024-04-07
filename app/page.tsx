@@ -16,11 +16,16 @@ const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 export default async function Component() {
   const user = await getSession();
 
+  const session = await getSession();
+  const userId = session?.user.sub;
   const classes = await prisma.class.findMany({
     include: {
       location: true,
       classTimes: true,
     },
+    where: {
+      userId: userId,
+    }
   });
 
   return (
