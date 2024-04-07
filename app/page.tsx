@@ -10,6 +10,8 @@ import avatar4 from '@/assets/images/avatar4.jpeg';
 import avatar5 from '@/assets/images/avatar5.jpeg';
 import avatar6 from '@/assets/images/avatar6.jpeg';
 import {getSession} from "@auth0/nextjs-auth0";
+import getCentsAmountByUserId from '@/actions/getCents';
+import getGemsAmountByUserId from '@/actions/getGems';
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
@@ -35,6 +37,12 @@ export default async function Component() {
           <span className="">Table 7 :)</span>
         </Link>
         <nav className="flex items-center gap-4 ml-auto">
+          <div>
+          Gems: {await getGemsAmountByUserId(user?.user.sub)}
+          </div>
+          <div>
+          Money: {(await getCentsAmountByUserId(user?.user.sub))/100}
+          </div>
           <Link
             className="font-medium text-gray-900  dark:text-gray-50"
             href="/"
