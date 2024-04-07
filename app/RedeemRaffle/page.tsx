@@ -5,12 +5,15 @@ import getGemsAmountByUserId from '../../actions/getGems';
 import updateCentsAmountByUserId from '../../actions/updateCents';
 import updateGemsAmountByUserId from "@/actions/updateGems";
 import {getSession} from "@auth0/nextjs-auth0";
+import Link from 'next/link';
 
 function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setInputFive}: {setInputOne: any; setInputTwo: any; setInputThree: any; setInputFour: any; setInputFive: any;}) {
     const handleInputChangeOne= (event: any) => {
+        console.log(event)
         setInputOne(event.target.value)
     }
     const handleInputChangeTwo= (event: any) => {
+        console.log(event)
         setInputTwo(event.target.value)
     }
     const handleInputChangeThree= (event: any) => {
@@ -24,17 +27,17 @@ function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setI
     }
 
     return <div className="w-full">
-        <label className="block text-center uppercase tracking-wide text-gray-700 text-lg font-extrabold mt-4 mb-2" for="grid-zip">
+        <label className="block text-center uppercase tracking-wide text-gray-700 text-lg font-extrabold mt-4 mb-2">
             Pick Five Numbers
         </label>
 
 
         <div className="w-full flex flex-row justify-center">
             <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeTwo(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeThree(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeFour(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeFive(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
         </div>
     </div>
 }
@@ -79,10 +82,13 @@ function RaffleCard({cost}: {cost: number }) {
     const [userId, setUserId] = useState('');
 
     useEffect(() => {
+        console.log('before effect')
         const fetchBalance = async () => {
             try {
                 const session = await getSession();
                 const userId = session?.user.sub;
+                console.log('effect');
+                console.log(userId);
                 setUserId(userId);
                 const currentGemsBalance = await getGemsAmountByUserId(userId);
                 const currentCentsBalance = await getCentsAmountByUserId(userId);
@@ -91,6 +97,7 @@ function RaffleCard({cost}: {cost: number }) {
                 setGemsBalance(currentGemsBalance);
                 console.log(currentCentsBalance, currentGemsBalance)
             } catch(error) {
+                console.log('effect error');
                 console.error('Error in initializing error', error)
             }
         }
@@ -102,7 +109,8 @@ function RaffleCard({cost}: {cost: number }) {
         if (balance < cost) {
             return;
         }
-    
+        console.log('click');
+        console.log(userId)
         setRandomOne(getRandomInt(9));
         setRandomTwo(getRandomInt(9));
         setRandomThree(getRandomInt(9));
@@ -135,6 +143,7 @@ function RaffleCard({cost}: {cost: number }) {
         if (inputFive == randomFive) {
             matches++;
         }
+        console.log(inputOne, inputTwo, inputThree, inputFour, inputFive, randomOne, randomTwo, randomThree, randomFour, randomFive)
 
         updateGemsAmountByUserId(userId, balance-cost)
         if (matches == 5) {
@@ -154,7 +163,7 @@ function RaffleCard({cost}: {cost: number }) {
             <div className="w-full mb-5">
                 <h1 className="font-bold text-2xl mb-4 text-center text-gray-800">Instant Lottery</h1>
                 <p className="text-gray-700 text-lg text-center mb-4">
-                    Ticket Cost: <span className="font-semibold">{cost}</span>
+                    Ticket Cost: <span className="font-semibold">{cost} Gems</span>
                 </p>
                 <button onClick={() => onClickBuyRaffle(cost, gemsBalance)}
                         className="block mx-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 border border-blue-700 rounded transition ease-in-out duration-300 transform hover:-translate-y-1">
@@ -172,10 +181,69 @@ function RaffleCard({cost}: {cost: number }) {
 
 export default function RedeemRaffle() {
     return (
-        <div className="flex justify-center items-center mt-10">
-            <div className="max-w-3xl w-full"> {/* Adjust the max-width as needed */}
-                <RaffleCard cost={-100} />
-            </div>
+        <div className="flex flex-col min-h-screen">
+            <header className="sticky top-0 flex items-center h-14 gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+            <Link className="flex items-center gap-2" href="#">
+                <Package2Icon className="h-6 w-6" />
+                <span className="">Table 7 :)</span>
+            </Link>
+            <nav className="flex items-center gap-4 ml-auto">
+                <Link
+                className="font-medium text-gray-900  dark:text-gray-50"
+                href="#"
+                >
+                <div className="tab-button">
+                Classes
+                </div>
+                </Link>
+                <Link
+                className="font-medium text-gray-900  dark:text-gray-50"
+                href="/claimReward"
+                >
+                <div className="tab-button">
+                Claim Reward
+                </div>
+                </Link>
+                <Link
+                className="font-medium text-gray-900  dark:text-gray-50"
+                href="/RedeemRaffle"
+                >
+                <div className="tab-button">
+                Buy Raffle
+                </div>
+                </Link>
+            </nav>
+            </header>
+            <main className="flex-1 p-4 md:p-6">
+                <div className="flex justify-center items-center mt-10">
+                    <div className="max-w-3xl w-full"> {/* Adjust the max-width as needed */}
+                        <RaffleCard cost={-100} />
+                    </div>
+                </div>
+            </main>
         </div>
     );
 }
+
+// @ts-expect-error for now
+function Package2Icon(props) {
+    return (
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z" />
+        <path d="m3 9 2.45-4.9A2 2 0 0 1 7.24 3h9.52a2 2 0 0 1 1.8 1.1L21 9" />
+        <path d="M12 3v6" />
+      </svg>
+    );
+  }
+  
