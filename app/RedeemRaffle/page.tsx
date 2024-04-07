@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import getCentsAmountByUserId from '../../actions/getCents';
 import getGemsAmountByUserId from '../../actions/getGems';
+import updateCentsAmountByUserId from '../../actions/updateCents';
+import updateGemsAmountByUserId from "@/actions/updateGems";
 import {getSession} from "@auth0/nextjs-auth0";
 
 function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setInputFive}: {setInputOne: any; setInputTwo: any; setInputThree: any; setInputFour: any; setInputFive: any;}) {
@@ -74,12 +76,14 @@ function RaffleCard({cost}: {cost: number }) {
     const [gemsBalance, setGemsBalance] = useState(0);
 
     const [outcomeText, setOutcomeText] = useState("");
+    const [userId, setUserId] = useState('');
 
     useEffect(() => {
         const fetchBalance = async () => {
             try {
                 const session = await getSession();
                 const userId = session?.user.sub;
+                setUserId(userId);
                 const currentGemsBalance = await getGemsAmountByUserId(userId);
                 const currentCentsBalance = await getCentsAmountByUserId(userId);
 
@@ -131,14 +135,18 @@ function RaffleCard({cost}: {cost: number }) {
         if (inputFive == randomFive) {
             matches++;
         }
+
+        updateGemsAmountByUserId(userId, balance-cost)
         if (matches == 5) {
             setOutcomeText('You win the JACKPOT!');
-            return
+            updateCentsAmountByUserId(userId, centsBalance+200)
         } else if (matches > 0 && matches < 5) {
             setOutcomeText(`You matched ${matches} of the numbers!`)
-            return
+            updateCentsAmountByUserId(userId, centsBalance+(20*matches))
+        } else {
+            setOutcomeText('You lost...');
         }
-        setOutcomeText('You lost...');
+
     }
 
     return (
