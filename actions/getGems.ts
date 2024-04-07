@@ -1,7 +1,9 @@
 'use server'
 import prisma from "@/prisma";
+import { ulid } from 'ulid';
+
 async function getGemsAmountByUserId(userId:string) {
-  const gemsRecord = await prisma.gems.findUnique({
+  let gemsRecord = await prisma.gems.findUnique({
     where: {
       userId: userId,
     },
@@ -10,7 +12,17 @@ async function getGemsAmountByUserId(userId:string) {
     },
   });
 
-    return gemsRecord?.amount || 0;
+  if (gemsRecord == null) {
+    gemsRecord = await prisma.gems.create({
+      data: {
+        id: ulid(),
+        amount: 0,
+        userId,
+      },
+    });
+  }
+
+  return gemsRecord?.amount || 0;
 }
 
 export default getGemsAmountByUserId;
