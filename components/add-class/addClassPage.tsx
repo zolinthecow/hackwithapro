@@ -84,9 +84,6 @@ const AddClassPage: React.FC<Props> = ({ createClass, userId, redirectToHome }) 
 
   return (
     <div className={"min-h-screen flex flex-row justify-center"}>
-      <div className={`w-1/2 py-2 justify-center bg-red-700 text-white text-md`} hidden={errorMessage === ''}>
-        {errorMessage}
-      </div>
       <form className={"min-h-screen flex flex-row justify-center"} onSubmit={submitForm}>
         <div className="space-y-4">
           <div className="space-y-1">
@@ -117,6 +114,9 @@ const AddClassPage: React.FC<Props> = ({ createClass, userId, redirectToHome }) 
           <button type="submit" className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit
           </button>
+          <div className={`h-6 mt-4 bg-red-700 text-white text-sm text-center`} hidden={errorMessage === ''}>
+    {errorMessage}
+  </div>
         </div>
       </form>
     </div>
