@@ -9,6 +9,7 @@ import Link from "next/link";
 import updateClaimTime from '@/actions/updateClaimTime';
 import updateGemsAmountByUserId from '@/actions/updateGems';
 import getGemsAmountByUserId from '@/actions/getGems';
+import { Package2Icon } from 'lucide-react';
 
 function calculateDistance(c1:any, c2:any) {
     const R = 6371e3; // earth radius in meters
@@ -41,14 +42,17 @@ function isTimeWithinOneHour(time: string): boolean {
 export default function ClaimRewardView({classes,userId}:any) {
   const [isClose, setIsClose] = useState<null|boolean>(null);
   const [alreadClaimed, setAlreadyClaimed] = useState<boolean>(false);
-  const [notAlloed, setNotAllowed] = useState<boolean>(false);
+  const [notAllowed, setNotAllowed] = useState<boolean>(false);
 //   const target: Coordinates = {latitude: 34.03891167656135, longitude: -118.43653231621187};
   const proximityThreshold = 500;
 
   useEffect(() => {
     const update_IsClose = async () => {
+        console.log('1')
         if (navigator.geolocation) {
+        console.log('2')
             navigator.geolocation.getCurrentPosition((position) => {
+        console.log('3')
                 let new_isClose = false;
                 let current_day = new Date().getDay();
                 for(let i = 0; i<classes.length; i++){
@@ -74,7 +78,7 @@ export default function ClaimRewardView({classes,userId}:any) {
                     }
                 }
                 setIsClose(new_isClose);
-            });
+            },() => setNotAllowed(true));
         }
     }
     update_IsClose();
@@ -115,10 +119,43 @@ export default function ClaimRewardView({classes,userId}:any) {
   }
 
 
-    return <div className={styles.container}>
+    return <div className="flex flex-col min-h-screen">
+      <header className="sticky top-0 flex items-center h-14 gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
+        <Link className="flex items-center gap-2" href="#">
+          <Package2Icon className="h-6 w-6" />
+          <span className="">Table 7 :)</span>
+        </Link>
+        <nav className="flex items-center gap-4 ml-auto">
+          <Link
+            className="font-medium text-gray-900  dark:text-gray-50"
+            href="#"
+          >
+            <div className="tab-button">
+            Classes
+            </div>
+          </Link>
+          <Link
+            className="font-medium text-gray-900  dark:text-gray-50"
+            href="/claimReward"
+          >
+            <div className="tab-button">
+            Claim Reward
+            </div>
+          </Link>
+          <Link
+            className="font-medium text-gray-900  dark:text-gray-50"
+            href="/RedeemRaffle"
+          >
+            <div className="tab-button">
+            Buy Raffle
+            </div>
+          </Link>
+        </nav>
+      </header>
+    <div className={styles.container}>
         {
         isClose == null
-        ? <div className={`${styles.title_close}`}>Loading...</div>
+        ? <div className={`${styles.title_close}`}>{notAllowed? "Must allow location tracking" :"Loading..."}</div>
         : isClose
         ? 
             <>
@@ -155,6 +192,7 @@ export default function ClaimRewardView({classes,userId}:any) {
             </Link>
             </>
         }
+    </div>
     </div>
 }
 
