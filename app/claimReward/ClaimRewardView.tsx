@@ -62,7 +62,7 @@ export default function ClaimRewardView({classes,userId}:any) {
                             isTimeWithinOneHour(classes[i].classTimes[j].startTime) && 
                             classes[i].classTimes[j].dayOfWeek == current_day 
                         ){
-                            if (classes[i].classTimes[j].lastClaimedTimestamp < Date.now() - 24*60*60*1000) {
+                            if (classes[i].classTimes[j].lastClaimedTimeStamp < Date.now() - 24*60*60*1000) {
                                 valid_time = true;
                                 break;
                             } else {
@@ -98,11 +98,11 @@ export default function ClaimRewardView({classes,userId}:any) {
             if(
                 isTimeWithinOneHour(classes[i].classTimes[j].startTime) && 
                 classes[i].classTimes[j].dayOfWeek == current_day && 
-                classes[i].classTimes[j].lastClaimedTimestamp < Date.now() - 24*60*60*1000
+                classes[i].classTimes[j].lastClaimedTimeStamp < Date.now() - 24*60*60*1000
             ){
                 console.log('found valid time')
                 valid_time = true;
-                classes[i].classTimes[j].lastClaimedTimestamp = Date.now()
+                classes[i].classTimes[j].lastClaimedTimeStamp = Date.now()
                 await updateClaimTime(classes[i].classTimes[j].id);
                 let update_amount = Math.floor(250/classes_per_month);
                 await updateGemsAmountByUserId(
