@@ -188,7 +188,7 @@ function RaffleCard({cost, userId}: {cost: number; userId:any; }) {
         updateGemsAmountByUserId(userId, balance-(cost/10))
         if (matches == 5) {
             setOutcomeText('You win the JACKPOT!');
-            updateCentsAmountByUserId(userId, centsBalance+1000)
+            updateCentsAmountByUserId(userId, centsBalance+100000)
         } else if (matches > 0 && matches < 5) {
             setOutcomeText(`You matched ${matches} of the numbers!`)
             updateCentsAmountByUserId(userId, centsBalance+(20*matches))
