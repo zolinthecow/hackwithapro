@@ -20,15 +20,17 @@ function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setI
     }
 
     return <div className="w-full">
-        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+        <label className="block text-center uppercase tracking-wide text-gray-700 text-lg font-extrabold mt-4 mb-2" for="grid-zip">
             Pick Five Numbers
         </label>
+
+
         <div className="w-full flex flex-row justify-center">
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
-            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
+            <input onChange={(event) => handleInputChangeOne(event)} className="appearance-none block w-20 bg-gray-200 text-gray-700 border border-gray-200 rounded p-5 m-5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="0-9"></input>
         </div>
     </div>
 }
@@ -36,7 +38,7 @@ function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setI
 function LotteryView({randomOne, randomTwo, randomThree, randomFour, randomFive }: {randomOne: number; randomTwo: number, randomThree: number; randomFour: number; randomFive: number; }) {
     return (
         <div>
-            <p className="font-bold text-xl mb-2">Lottery Numbers</p>
+            <p className="font-bold text-xl mb-2 text-center">Lottery Numbers</p>
             <div className="w-full flex flex-row justify-center">
                 <div className="mx-5">{randomOne}</div>
                 <div className="mx-5">{randomTwo}</div>
@@ -104,22 +106,29 @@ function RaffleCard({cost}: {cost: number }) {
     }
 
     return (
-        <div className="w-full rounded overflow-hidden shadow-lg">
-            <div className="w-full">
-                <div className="font-bold text-xl mb-2">Instant Lottery</div>
-                <p className="text-gray-700 text-base">
-                    Costs {cost}
+        <div className="w-full rounded-lg overflow-hidden shadow-xl p-5 bg-white">
+            <div className="w-full mb-5">
+                <h1 className="font-bold text-2xl mb-4 text-center text-gray-800">Instant Lottery</h1>
+                <p className="text-gray-700 text-lg text-center mb-4">
+                    Ticket Cost: <span className="font-semibold">{cost}</span>
                 </p>
-                <button onClick={() => onClickBuyRaffle(cost, balance)} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">Buy Raffle</button>
-                <RaffleGame setInputOne={setInputOne} setInputTwo={setInputTwo} setInputThree={setInputThree} setInputFour={setInputFour} setInputFive={setInputFive}></RaffleGame>
+                <button onClick={() => onClickBuyRaffle(cost, balance)}
+                        className="block mx-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 border border-blue-700 rounded transition ease-in-out duration-300 transform hover:-translate-y-1">
+                    Buy Raffle
+                </button>
+                <RaffleGame setInputOne={setInputOne} setInputTwo={setInputTwo} setInputThree={setInputThree} setInputFour={setInputFour} setInputFive={setInputFive}/>
             </div>
-            <LotteryView randomOne={randomOne} randomTwo={randomTwo} randomThree={randomThree} randomFour={randomFour} randomFive={randomFive}></LotteryView>
+            <LotteryView randomOne={randomOne} randomTwo={randomTwo} randomThree={randomThree} randomFour={randomFour} randomFive={randomFive}/>
         </div>
     );
 }
 
 export default function RedeemRaffle() {
     return (
-        <RaffleCard cost={-100} />
+        <div className="flex justify-center items-center mt-10">
+            <div className="max-w-3xl w-full"> {/* Adjust the max-width as needed */}
+                <RaffleCard cost={-100} />
+            </div>
+        </div>
     );
 }
