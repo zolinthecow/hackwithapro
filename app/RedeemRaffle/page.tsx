@@ -223,7 +223,7 @@ export default function RedeemRaffle() {
             <nav className="flex items-center gap-4 ml-auto">
                 <Link
                 className="font-medium text-gray-900  dark:text-gray-50"
-                href="#"
+                href="/"
                 >
                 <div className="tab-button">
                 Classes
