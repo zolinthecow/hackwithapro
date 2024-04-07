@@ -82,16 +82,16 @@ function RaffleCard({cost}: {cost: number }) {
     const [userId, setUserId] = useState('');
 
     useEffect(() => {
-        if(inputOne>=0&&inputOne<=9&&inputTwo>=0&&inputTwo<=9&&inputThree>=0&&inputThree<=9&&inputFour>=0&&inputFour<=9&&inputFive>=0&&inputFive<=9){
+        // if(inputOne>=0&&inputOne<=9&&inputTwo>=0&&inputTwo<=9&&inputThree>=0&&inputThree<=9&&inputFour>=0&&inputFour<=9&&inputFive>=0&&inputFive<=9){
         const fetchBalance = async () => {
             try {
                 const session = await getSession();
-                const userId = session?.user.sub;
+                const uI = session?.user.sub;
                 console.log('effect');
-                console.log(userId);
-                setUserId(userId);
-                const currentGemsBalance = await getGemsAmountByUserId(userId);
-                const currentCentsBalance = await getCentsAmountByUserId(userId);
+                console.log(uI);
+                setUserId(uI);
+                const currentGemsBalance = await getGemsAmountByUserId(uI);
+                const currentCentsBalance = await getCentsAmountByUserId(uI);
 
                 setCentsBalance(currentCentsBalance);
                 setGemsBalance(currentGemsBalance);
@@ -105,38 +105,38 @@ function RaffleCard({cost}: {cost: number }) {
         fetchBalance();
         console.log(userId)
 
-        let matches = 0;
-        if (inputOne == randomOne) {
-            matches++;
-        }
-        if (inputTwo == randomTwo) {
-            matches++;
-        }
-        if (inputThree == randomThree) {
-            matches++;
-        }
-        if (inputFour == randomFour) {
-            matches++;
-        }
-        if (inputFive == randomFive) {
-            matches++;
-        }
-        if (randomOne == 0 && randomTwo == 0 && randomThree == 0 && randomFour == 0 && randomFive == 0) {
-            return
-        }
-        if (matches == 5) {
-            setOutcomeText('You win the JACKPOT!');
-            updateCentsAmountByUserId(userId, centsBalance + 200);
-        } else if (matches > 0 && matches < 5) {
-            setOutcomeText(`You matched ${matches} of the numbers!`);
-            updateCentsAmountByUserId(userId, centsBalance + (20 * matches));
-        } else {
-            setOutcomeText('You lost...');
-        }
-    }
-    else{
-        setOutcomeText(' ');
-    }
+    //     let matches = 0;
+    //     if (inputOne == randomOne) {
+    //         matches++;
+    //     }
+    //     if (inputTwo == randomTwo) {
+    //         matches++;
+    //     }
+    //     if (inputThree == randomThree) {
+    //         matches++;
+    //     }
+    //     if (inputFour == randomFour) {
+    //         matches++;
+    //     }
+    //     if (inputFive == randomFive) {
+    //         matches++;
+    //     }
+    //     if (randomOne == 0 && randomTwo == 0 && randomThree == 0 && randomFour == 0 && randomFive == 0) {
+    //         return
+    //     }
+    //     if (matches == 5) {
+    //         setOutcomeText('You win the JACKPOT!');
+    //         updateCentsAmountByUserId(userId, centsBalance + 200);
+    //     } else if (matches > 0 && matches < 5) {
+    //         setOutcomeText(`You matched ${matches} of the numbers!`);
+    //         updateCentsAmountByUserId(userId, centsBalance + (20 * matches));
+    //     } else {
+    //         setOutcomeText('You lost...');
+    //     }
+    // }
+    // else{
+    //     setOutcomeText(' ');
+    // }
         
     }, [randomOne, randomTwo, randomThree, randomFour, randomFive, inputOne, inputTwo, inputThree, inputFour, inputFive, userId, centsBalance]);
     
@@ -146,13 +146,16 @@ function RaffleCard({cost}: {cost: number }) {
         //     setOutcomeText('You need more gems!');
         //     return;
         // }
-        console.log('click');
-        console.log(userId)
-        setRandomOne(getRandomInt(9));
-        setRandomTwo(getRandomInt(9));
-        setRandomThree(getRandomInt(9));
-        setRandomFour(getRandomInt(9));
-        setRandomFive(getRandomInt(9));
+        let r1 = getRandomInt(9);
+        let r2 = getRandomInt(9);
+        let r3 = getRandomInt(9);
+        let r4 = getRandomInt(9);
+        let r5 = getRandomInt(9);
+        setRandomOne(r1);
+        setRandomTwo(r2);
+        setRandomThree(r3);
+        setRandomFour(r4);
+        setRandomFive(r5);
         // HARDCODE FOR DEMO 12345
         if (inputOne == 1 && inputTwo == 2 &&
             inputThree == 3 && inputFour == 4
@@ -162,22 +165,27 @@ function RaffleCard({cost}: {cost: number }) {
             setRandomThree(3);
             setRandomFour(4);
             setRandomFive(5);
+            r1 = 1;
+            r2 = 2;
+            r3 = 3;
+            r4 = 4;
+            r5 = 5;
         }
 
         let matches = 0
-        if (inputOne == randomOne) {
+        if (inputOne == r1) {
             matches++;
         }
-        if (inputTwo == randomTwo) {
+        if (inputTwo == r2) {
             matches++;
         }
-        if (inputThree == randomThree) {
+        if (inputThree == r3) {
             matches++;
         }
-        if (inputFour == randomFour) {
+        if (inputFour == r4) {
             matches++;
         }
-        if (inputFive == randomFive) {
+        if (inputFive == r5) {
             matches++;
         }
         console.log(inputOne, inputTwo, inputThree, inputFour, inputFive, randomOne, randomTwo, randomThree, randomFour, randomFive)
