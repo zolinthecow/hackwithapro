@@ -40,7 +40,9 @@ export default async function Component() {
             href="#"
           >
             <div className="tab-button">
+            <Link href="https://table7-hack.vercel.app/">
             Classes
+            </Link>
             </div>
           </Link>
           <Link
