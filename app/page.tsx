@@ -49,7 +49,7 @@ export default async function Component() {
           </Link>
           <Link
             className="font-medium text-gray-900  dark:text-gray-50"
-            href="#"
+            href="/RedeemRaffle"
           >
             <div className="tab-button">
             Buy Raffle
