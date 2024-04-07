@@ -1,9 +1,8 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import getCentsBalances from '../../actions/getCentsBalance';
-import getGemBalances from '../../actions/getGemBalance';
-
-import prisma from "@/prisma";
+import getCentsAmountByUserId from '../../actions/getCents';
+import getGemsAmountByUserId from '../../actions/getGems';
+import {getSession} from "@auth0/nextjs-auth0";
 
 function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setInputFive}: {setInputOne: any; setInputTwo: any; setInputThree: any; setInputFour: any; setInputFive: any;}) {
     const handleInputChangeOne= (event: any) => {
@@ -74,14 +73,19 @@ function RaffleCard({cost}: {cost: number }) {
     const [centsBalance, setCentsBalance] = useState(0);
     const [gemsBalance, setGemsBalance] = useState(0);
 
+    const [outcomeText, setOutcomeText] = useState("");
+
     useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const currentGemsBalance = await getGemBalances();
-                const currentCentsBalance = await getCentsBalances();
+                const session = await getSession();
+                const userId = session?.user.sub;
+                const currentGemsBalance = await getGemsAmountByUserId(userId);
+                const currentCentsBalance = await getCentsAmountByUserId(userId);
 
                 setCentsBalance(currentCentsBalance);
                 setGemsBalance(currentGemsBalance);
+                console.log(currentCentsBalance, currentGemsBalance)
             } catch(error) {
                 console.error('Error in initializing error', error)
             }
@@ -100,15 +104,41 @@ function RaffleCard({cost}: {cost: number }) {
         setRandomThree(getRandomInt(9));
         setRandomFour(getRandomInt(9));
         setRandomFive(getRandomInt(9));
+        // HARDCODE FOR DEMO 12389
+        if (inputOne == 1 && inputTwo == 2 &&
+            inputThree == 3 && inputFour == 8
+            && inputFive == 9) {
+            setRandomOne(1);
+            setRandomTwo(2);
+            setRandomThree(3);
+            setRandomFour(8);
+            setRandomFive(9);
+        }
 
-        if (inputOne == randomOne && inputTwo == randomTwo &&
-            inputThree == randomThree && inputFour == randomFour
-            && inputFive == randomFive) {
-            // indicate win TODO
+        let matches = 0
+        if (inputOne == randomOne) {
+            matches++;
+        }
+        if (inputTwo == randomTwo) {
+            matches++;
+        }
+        if (inputThree == randomThree) {
+            matches++;
+        }
+        if (inputFour == randomFour) {
+            matches++;
+        }
+        if (inputFive == randomFive) {
+            matches++;
+        }
+        if (matches == 5) {
+            setOutcomeText('You win the JACKPOT!');
+            return
+        } else if (matches > 0 && matches < 5) {
+            setOutcomeText(`You matched ${matches} of the numbers!`)
             return
         }
-        console.error('doesn\'t match')
-        // indicate loss
+        setOutcomeText('You lost...');
     }
 
     return (
@@ -125,6 +155,9 @@ function RaffleCard({cost}: {cost: number }) {
                 <RaffleGame setInputOne={setInputOne} setInputTwo={setInputTwo} setInputThree={setInputThree} setInputFour={setInputFour} setInputFive={setInputFive}/>
             </div>
             <LotteryView randomOne={randomOne} randomTwo={randomTwo} randomThree={randomThree} randomFour={randomFour} randomFive={randomFive}/>
+            <div>
+                {outcomeText}
+            </div>
         </div>
     );
 }

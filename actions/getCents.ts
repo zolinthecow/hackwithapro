@@ -12,3 +12,5 @@ async function getCentsAmountByUserId(userId:string) {
 
     return centsRecord.amount;
 }
+
+export default getCentsAmountByUserId;

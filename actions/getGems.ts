@@ -12,3 +12,5 @@ async function getGemsAmountByUserId(userId:string) {
 
     return gemsRecord.amount;
 }
+
+export default getGemsAmountByUserId;
