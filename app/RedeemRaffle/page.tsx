@@ -1,5 +1,8 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import getCentsBalances from '@/actions/getCentsBalance';
+import getGemsBalances from '@/actions/getGemsBalance';
+
 import prisma from "@/prisma";
 
 function RaffleGame({setInputOne, setInputTwo, setInputThree, setInputFour, setInputFive}: {setInputOne: any; setInputTwo: any; setInputThree: any; setInputFour: any; setInputFive: any;}) {
@@ -68,17 +71,20 @@ function RaffleCard({cost}: {cost: number }) {
     const [inputFour, setInputFour] = useState(0);
     const [inputFive, setInputFive] = useState(0);
 
-    const [balance, setBalance] = useState(0);
+    const [centsBalance, setCentsBalance] = useState(0);
+    const [gemsBalance, setGemsBalance] = useState(0);
 
     useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const currentBalance = await prisma.class.getMany();
-                setBalance(currentBalance);
+                const currentGemsBalance = await getGemsBalances();
+                const currentCentsBalance = await getCentsBalances();
+
+                setCentsBalance(currentCentsBalance);
+                setGemsBalance(currentGemsBalance);
             } catch(error) {
                 console.error('Error in initializing error', error)
             }
-            const currentBalance = await prisma.class.findMany();
         }
         
         fetchBalance();
@@ -112,7 +118,7 @@ function RaffleCard({cost}: {cost: number }) {
                 <p className="text-gray-700 text-lg text-center mb-4">
                     Ticket Cost: <span className="font-semibold">{cost}</span>
                 </p>
-                <button onClick={() => onClickBuyRaffle(cost, balance)}
+                <button onClick={() => onClickBuyRaffle(cost, gemsBalance)}
                         className="block mx-auto bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 border border-blue-700 rounded transition ease-in-out duration-300 transform hover:-translate-y-1">
                     Buy Raffle
                 </button>
