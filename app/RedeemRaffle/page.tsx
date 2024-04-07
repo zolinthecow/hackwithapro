@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import getCentsBalances from '@/actions/getCentsBalance';
-import getGemsBalances from '@/actions/getGemsBalance';
+import getCentsBalances from '../../actions/getCentsBalance';
+import getGemBalances from '../../actions/getGemBalance';
 
 import prisma from "@/prisma";
 
@@ -77,7 +77,7 @@ function RaffleCard({cost}: {cost: number }) {
     useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const currentGemsBalance = await getGemsBalances();
+                const currentGemsBalance = await getGemBalances();
                 const currentCentsBalance = await getCentsBalances();
 
                 setCentsBalance(currentCentsBalance);
