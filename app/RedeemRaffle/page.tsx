@@ -253,7 +253,7 @@ export default function RedeemRaffle() {
             <main className="flex-1 p-4 md:p-6">
                 <div className="flex justify-center items-center mt-10">
                     <div className="max-w-3xl w-full"> {/* Adjust the max-width as needed */}
-                        <RaffleCard cost={-100} />
+                        <RaffleCard cost={100} />
                     </div>
                 </div>
             </main>
