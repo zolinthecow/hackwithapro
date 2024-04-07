@@ -9,10 +9,13 @@ import avatar3 from '@/assets/images/avatar3.jpeg';
 import avatar4 from '@/assets/images/avatar4.jpeg';
 import avatar5 from '@/assets/images/avatar5.jpeg';
 import avatar6 from '@/assets/images/avatar6.jpeg';
+import {getSession} from "@auth0/nextjs-auth0";
 
 const avatarImages = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6];
 
 export default async function Component() {
+  const user = await getSession();
+
   const classes = await prisma.class.findMany({
     include: {
       location: true,
@@ -74,10 +77,7 @@ export default async function Component() {
                   <h3 className="font-semibold">{classInfo.name}</h3>
                 </div>
                 <div className="flex flex-col justify-center p-4">
-                  <h3 className="font-semibold">{classInfo.location?.lat}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {classInfo.id}
-                  </p>
+                  <h3 className="font-semibold">{classInfo.location?.name}</h3>
                 </div>
               </div>
             ))}
