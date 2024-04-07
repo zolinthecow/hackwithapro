@@ -82,28 +82,34 @@ function RaffleCard({cost}: {cost: number }) {
     const [userId, setUserId] = useState('');
 
     useEffect(() => {
-        console.log('before effect')
-        const fetchBalance = async () => {
-            try {
-                const session = await getSession();
-                const userId = session?.user.sub;
-                console.log('effect');
-                console.log(userId);
-                setUserId(userId);
-                const currentGemsBalance = await getGemsAmountByUserId(userId);
-                const currentCentsBalance = await getCentsAmountByUserId(userId);
-
-                setCentsBalance(currentCentsBalance);
-                setGemsBalance(currentGemsBalance);
-                console.log(currentCentsBalance, currentGemsBalance)
-            } catch(error) {
-                console.log('effect error');
-                console.error('Error in initializing error', error)
-            }
+        let matches = 0;
+        if (inputOne == randomOne) {
+            matches++;
         }
-        
-        fetchBalance();
-    }, [])
+        if (inputTwo == randomTwo) {
+            matches++;
+        }
+        if (inputThree == randomThree) {
+            matches++;
+        }
+        if (inputFour == randomFour) {
+            matches++;
+        }
+        if (inputFive == randomFive) {
+            matches++;
+        }
+    
+        if (matches == 5) {
+            setOutcomeText('You win the JACKPOT!');
+            updateCentsAmountByUserId(userId, centsBalance + 200);
+        } else if (matches > 0 && matches < 5) {
+            setOutcomeText(`You matched ${matches} of the numbers!`);
+            updateCentsAmountByUserId(userId, centsBalance + (20 * matches));
+        } else {
+            setOutcomeText('You lost...');
+        }
+    }, [randomOne, randomTwo, randomThree, randomFour, randomFive, inputOne, inputTwo, inputThree, inputFour, inputFive, userId, centsBalance]);
+    
 
     const onClickBuyRaffle = (cost: number, balance: number) => {
         if (balance < cost) {
