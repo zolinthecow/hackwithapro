@@ -83,6 +83,28 @@ function RaffleCard({cost}: {cost: number }) {
 
     useEffect(() => {
         if(inputOne>=0&&inputOne<=9&&inputTwo>=0&&inputTwo<=9&&inputThree>=0&&inputThree<=9&&inputFour>=0&&inputFour<=9&&inputFive>=0&&inputFive<=9){
+        const fetchBalance = async () => {
+            try {
+                const session = await getSession();
+                const userId = session?.user.sub;
+                console.log('effect');
+                console.log(userId);
+                setUserId(userId);
+                const currentGemsBalance = await getGemsAmountByUserId(userId);
+                const currentCentsBalance = await getCentsAmountByUserId(userId);
+
+                setCentsBalance(currentCentsBalance);
+                setGemsBalance(currentGemsBalance);
+                console.log(currentCentsBalance, currentGemsBalance)
+            } catch(error) {
+                console.log('effect error');
+                console.error('Error in initializing error', error)
+            }
+        }
+
+        fetchBalance();
+        console.log(userId)
+
         let matches = 0;
         if (inputOne == randomOne) {
             matches++;
@@ -127,15 +149,15 @@ function RaffleCard({cost}: {cost: number }) {
         setRandomThree(getRandomInt(9));
         setRandomFour(getRandomInt(9));
         setRandomFive(getRandomInt(9));
-        // HARDCODE FOR DEMO 12389
+        // HARDCODE FOR DEMO 12345
         if (inputOne == 1 && inputTwo == 2 &&
-            inputThree == 3 && inputFour == 8
-            && inputFive == 9) {
+            inputThree == 3 && inputFour == 4
+            && inputFive == 5) {
             setRandomOne(1);
             setRandomTwo(2);
             setRandomThree(3);
-            setRandomFour(8);
-            setRandomFive(9);
+            setRandomFour(4);
+            setRandomFive(5);
         }
 
         let matches = 0
