@@ -142,10 +142,10 @@ function RaffleCard({cost}: {cost: number }) {
     
 
     const onClickBuyRaffle = (cost: number, balance: number) => {
-        if (balance < cost) {
-            setOutcomeText('You need more gems!');
-            return;
-        }
+        // if (balance < cost) {
+        //     setOutcomeText('You need more gems!');
+        //     return;
+        // }
         console.log('click');
         console.log(userId)
         setRandomOne(getRandomInt(9));
